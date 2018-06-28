@@ -9,18 +9,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.latifat.flicks.models.Config;
 import com.app.latifat.flicks.models.Movie;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
     //list of movies
     ArrayList<Movie> movies;
+    //config needed for image urls
+    Config config;
+    //context for rendering
+    Context context;
 
     //initialize with list
     public MovieAdapter(ArrayList<Movie> movies) {
         this.movies = movies;
+    }
+
+    public void setConfig(Config config) {
+        this.config = config;
     }
 
     // creates and inflates a new view
@@ -28,7 +40,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         //get the context and create the inflater
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         //create the view using the item_movie layout
         View movieView = inflater.inflate(R.layout.item_movie, parent, false);
@@ -45,8 +57,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.tvTitle.setText(movie.getTitle());
         holder.tvOverview.setText(movie.getOverview());
 
-        //TODO - set image using Glide
+        //build url for poster image
+        String imageUrl = config.getImageUrl(config.getPosterSize(), movie.getPosterPath());
 
+        //load the image using glide
+        Glide.with(context)
+                .load(imageUrl)
+                .bitmapTransform(new RoundedCornersTransformation(context, 25, 0))
+                .placeholder(R.drawable.flicks_movie_placeholder)
+                .error(R.drawable.flicks_movie_placeholder)
+                .into(holder.ivPosterImage);
     }
 
     // returns the total number of items in the list
@@ -55,7 +75,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movies.size();
     }
 
-    //create the viewholder as a static inner class
+    //create the view holder as a static inner class
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         //track view objects
