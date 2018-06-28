@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.app.latifat.flicks.models.Config;
 import com.app.latifat.flicks.models.Movie;
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -61,9 +60,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         String imageUrl = config.getImageUrl(config.getPosterSize(), movie.getPosterPath());
 
         //load the image using glide
-        Glide.with(context)
+
+        GlideApp.with(context)
                 .load(imageUrl)
-                .bitmapTransform(new RoundedCornersTransformation(context, 25, 0))
+                .transform(new RoundedCornersTransformation(15, 0))
                 .placeholder(R.drawable.flicks_movie_placeholder)
                 .error(R.drawable.flicks_movie_placeholder)
                 .into(holder.ivPosterImage);
