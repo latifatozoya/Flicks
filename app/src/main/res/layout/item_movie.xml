@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="2dp"
+        android:layout_marginBottom="5dp"
         android:layout_toEndOf="@+id/ivPosterImage"
         android:text="Movie Title"
         android:textAppearance="@android:style/TextAppearance.Large" />
@@ -28,7 +29,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
+        android:textSize="17dp"
         android:layout_marginStart="2dp"
+        android:ellipsize="end"
+        android:maxLines="5"
         android:layout_toEndOf="@+id/ivPosterImage"
         android:text="Movie overview and synopsis" />
 </RelativeLayout>

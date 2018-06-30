@@ -101,13 +101,17 @@ public class MovieListActivity extends AppCompatActivity {
     private void getConfiguration() {
         //create url
         String url = API_BASE_URL + "/configuration";
+
         //set request parameters
         RequestParams params = new RequestParams();
         params.put(API_KEY_PARAM, getString(R.string.api_key)); //API key, always required
         //execute GET request expecting a JSON object response
         client.get(url, params, new JsonHttpResponseHandler() {
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                System.out.println("letseeifthisworks");
 
                 try {
                     config = new Config(response);
